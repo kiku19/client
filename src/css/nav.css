@@ -1,0 +1,41 @@
+/* .navItems:active .spanHover{
+    background-color: #BFD8D8;
+
+} */
+
+.spanHover{
+    transition:background-color 0.5s;
+    /* transition:display 1s; */
+    border-radius: 0.6rem;
+    padding: 0.6rem;
+    margin: 0.7rem 0.8rem;
+
+}
+.spanHover svg{
+    transition: .3s;
+}
+.spanHover:hover svg path{
+    fill:#4DA6A6; 
+}
+
+.active{
+    background-color: #BFD8D8;
+}
+.iconActive{
+    fill: #4DA6A6;
+}
+
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
