@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import Home from "./Icon/Home";
 import styled from "styled-components";
 import NavIcon from "./NavIcon";
@@ -32,7 +32,14 @@ const Ul = styled.ul`
   }
 `;
 
+export const Width = createContext();
+
 const NavItem = () => {
+  const [maxWidth,setMaxWidth] = useState("60px")
+  const widthArray = [];
+  const setMinWidth = useCallback((width) => {
+    widthArray.push(width);
+  },[])
   const click = (e) => {
     const NavIcon = document.getElementsByClassName("NavIcon");
 
@@ -46,15 +53,20 @@ const NavItem = () => {
       }
     });
   };
+useEffect(()=>{
+setMaxWidth(Math.max(...widthArray))
+},[])
   return (
-    <CustomScrollDiv>
-      <Ul className="scroll-host">
-        {items.map(({ icon, text }) => (
-          <NavIcon key={text} icon={icon} text={text} click={click}></NavIcon>
-        ))}
-      </Ul>
-      <ToolTip></ToolTip>
-    </CustomScrollDiv>
+    <Width.Provider value={{setMinWidth,maxWidth}}>
+      <CustomScrollDiv>
+        <Ul className="scroll-host">
+          {items.map(({ icon, text }) => (
+            <NavIcon key={text} icon={icon} text={text} click={click}></NavIcon>
+          ))}
+        </Ul>
+        {/* <ToolTip></ToolTip> */}
+      </CustomScrollDiv>
+    </Width.Provider>
   );
 };
 

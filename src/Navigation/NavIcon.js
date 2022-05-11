@@ -1,8 +1,41 @@
-import React, { useContext } from "react";
+import React, { forwardRef, useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Toggle } from "./Nav";
 import { CSSTransition } from "react-transition-group";
+import Portal from "./Portal";
+import { Width } from "./NavItems";
 
+const NavIcon = ({ icon, text, click }) => {
+  const toggle = useContext(Toggle);
+  const maxWidth =  useContext(Width).maxWidth
+  if(maxWidth)
+ 
+  return (
+    <>
+      <Span
+        className={"NavIcon"}
+        onClick={(e) => {
+          click(e);
+        }}
+      >
+        <I>{React.createElement(icon, { width: "1.2rem", fill: "#8E8E8E" })}</I>
+        <CSSTransition
+          in={toggle}
+          timeout={300}
+          unmountOnExit
+          classNames="toggle"
+          >
+          <Div className="toggle-base" maxWidth={maxWidth}>
+            <P>{text}</P>
+          </Div>
+        </CSSTransition>
+        {(maxWidth==="60px") && <Portal><P>{text}</P></Portal>}
+      </Span>
+    </>
+  );
+};
+
+export default NavIcon;
 const Span = styled.span`
   display: inline-flex;
   align-items: center;
@@ -29,53 +62,38 @@ const I = styled.i`
 `;
 
 const P = styled.p`
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin: 0 0 0 1rem;
   transform-origin: left;
-  &.my-node-enter {
-    opacity: 0;
-    transform: scale(0);
+`;
+const Div = styled.div`
+  &.toggle-enter {
+    animation-name: fade-in;
+    animation-duration: 400ms;
   }
-  &.my-node-enter-active {
-    opacity: 1;
-    transition: 300ms;
-    transform: scale(1);
+  &.toggle-exit {
+    animation-name: fade-out;
+    animation-duration: 400ms;
   }
-  &.my-node-exit {
-    opacity: 1;
-    transform: scale(1);
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      width: 0px;
+    }
+    to {
+      opacity: 1;
+      width: ${({maxWidth})=>maxWidth}px;
+    }
   }
-  &.my-node-exit-active {
-    opacity: 0;
-    transform: scale(0);
-    transition: 300ms;
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+      width: ${({maxWidth})=>maxWidth}px;
+    }
+    to {
+      opacity: 0;
+      width: 0px;
+    }
   }
 `;
-
-const NavIcon = ({ icon, text, click }) => {
-  const toggle = useContext(Toggle);
-  return (
-    <>
-        <Span
-          className={"NavIcon"}
-          onClick={(e) => {
-            click(e);
-          }}
-        >
-          <I>
-            {React.createElement(icon, { width: "1.2rem", fill: "#8E8E8E" })}
-          </I>
-          <CSSTransition
-            in={toggle}
-            timeout={100}
-            unmountOnExit
-            classNames="my-node"
-          >
-            <P>{text}</P>
-          </CSSTransition>
-        </Span>
-    </>
-  );
-};
-
-export default NavIcon;
