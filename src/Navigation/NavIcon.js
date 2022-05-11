@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useEffect, useRef } from "react";
+import React, {useContext} from "react";
 import styled from "styled-components";
 import { Toggle } from "./Nav";
 import { CSSTransition } from "react-transition-group";
