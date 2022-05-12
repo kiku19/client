@@ -1,35 +1,30 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Toggle } from "./Nav";
 import { CSSTransition } from "react-transition-group";
 import Portal from "./Portal";
-import { Width } from "./NavItems";
+import { Width } from "./WidthCalc";
+import click from "./click--helper";
 
-const NavIcon = ({ icon, text, click }) => {
+const NavIcon = ({ icon, text}) => {
   const toggle = useContext(Toggle);
-  const maxWidth =  useContext(Width).maxWidth
-  if(maxWidth)
- 
+  const minWidth = useContext(Width).minWidth; //minWidth is used to set the 
+
   return (
     <>
-      <Span
-        className={"NavIcon"}
-        onClick={(e) => {
-          click(e);
-        }}
-      >
+      <Span className={"NavIcon"} onClick={(e)=>{click(e,document.getElementsByClassName("NavIcon"))}}>
         <I>{React.createElement(icon, { width: "1.2rem", fill: "#8E8E8E" })}</I>
-        <CSSTransition
-          in={toggle}
-          timeout={300}
-          unmountOnExit
-          classNames="toggle"
-          >
-          <Div className="toggle-base" maxWidth={maxWidth}>
+        <CSSTransition in={toggle} timeout={300} unmountOnExit classNames="toggle">
+          <Div className="toggle-base" minWidth={minWidth}>
             <P>{text}</P>
           </Div>
         </CSSTransition>
-        {(maxWidth==="60px") && <Portal><P>{text}</P></Portal>}
+
+        {minWidth === "60px" && (
+          <Portal>
+            <P>{text}</P>
+          </Portal>
+        )}
       </Span>
     </>
   );
@@ -75,7 +70,9 @@ const Div = styled.div`
     animation-name: fade-out;
     animation-duration: 400ms;
   }
-
+  &.toggle-base {
+    overflow: hidden;
+  }
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -83,13 +80,13 @@ const Div = styled.div`
     }
     to {
       opacity: 1;
-      width: ${({maxWidth})=>maxWidth}px;
+      width: ${({ minWidth }) => minWidth}px;
     }
   }
   @keyframes fade-out {
     from {
       opacity: 1;
-      width: ${({maxWidth})=>maxWidth}px;
+      width: ${({ minWidth }) => minWidth}px;
     }
     to {
       opacity: 0;

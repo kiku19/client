@@ -1,10 +1,11 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React from "react";
 import Home from "./Icon/Home";
 import styled from "styled-components";
 import NavIcon from "./NavIcon";
 import CustomScrollDiv from "./Scroll";
-import ToolTip from "./ToolTip";
+import WidthCalc from "./WidthCalc";
 
+//Modal : Nav-Modal
 const items = [
   { icon: Home, text: "Home" },
   { icon: Home, text: "Control" },
@@ -14,7 +15,26 @@ const items = [
   { icon: Home, text: "About" },
   { icon: Home, text: "Client" },
 ];
+//Modal end
 
+//Component Start
+const NavItem = () => {
+  return (
+    <WidthCalc>
+      <CustomScrollDiv>
+        <Ul className="scroll-host">
+          {items.map(({ icon, text }) => (
+            <NavIcon key={text} icon={icon} text={text}></NavIcon>
+          ))}
+        </Ul>
+      </CustomScrollDiv>
+    </WidthCalc>
+  );
+};
+//Component end
+export default NavItem;
+
+//Styling
 const Ul = styled.ul`
   display: inline-flex;
   flex-direction: column;
@@ -31,43 +51,3 @@ const Ul = styled.ul`
     }
   }
 `;
-
-export const Width = createContext();
-
-const NavItem = () => {
-  const [maxWidth,setMaxWidth] = useState("60px")
-  const widthArray = [];
-  const setMinWidth = useCallback((width) => {
-    widthArray.push(width);
-  },[])
-  const click = (e) => {
-    const NavIcon = document.getElementsByClassName("NavIcon");
-
-    Array.from(NavIcon).forEach((element) => {
-      if (element !== e.currentTarget) {
-        element.style.backgroundColor = "#ffffff";
-        element.classList.remove("active");
-      } else {
-        e.currentTarget.style.backgroundColor = "#E5F2F5";
-        e.currentTarget.classList.add("active");
-      }
-    });
-  };
-useEffect(()=>{
-setMaxWidth(Math.max(...widthArray))
-},[])
-  return (
-    <Width.Provider value={{setMinWidth,maxWidth}}>
-      <CustomScrollDiv>
-        <Ul className="scroll-host">
-          {items.map(({ icon, text }) => (
-            <NavIcon key={text} icon={icon} text={text} click={click}></NavIcon>
-          ))}
-        </Ul>
-        {/* <ToolTip></ToolTip> */}
-      </CustomScrollDiv>
-    </Width.Provider>
-  );
-};
-
-export default NavItem;

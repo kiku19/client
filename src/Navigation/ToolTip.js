@@ -1,12 +1,17 @@
-import React from 'react'
+import React,{useEffect} from 'react'
+import ReactDOM from "react-dom"
 
-const ToolTip = ({children}) => {
-    console.log(document.getElementsByClassName("NavIcon"))
-  return (
-    <>
-      
-    </>
-  )
+const ToolTip = ({isMouseEntered,isMouseLeft,children}) => {
+    console.log(isMouseEntered,isMouseLeft)
+    const containerToolTip = document.createElement("div")
+    document.body.appendChild(containerToolTip)
+
+    // useEffect(() => {
+    //   console.log(isMouseLeft)
+    //   isMouseLeft && document.body.removeChild(containerToolTip);
+    // });
+
+  return ReactDOM.createPortal(children,containerToolTip)
 }
 
-export default ToolTip
+export default React.memo(ToolTip)
