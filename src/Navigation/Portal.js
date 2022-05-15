@@ -13,7 +13,7 @@ const Portal = ({ children }) => {
   const div = document.createElement("div");
   for (let style in divStyle) div.style[style] = divStyle[style]
   document.body.appendChild(div);
-  console.log(children);
+  // console.log(children);
 
   const widthContext = useContext(Width);
 

@@ -6,15 +6,26 @@ import Portal from "./Portal";
 import { Width } from "./WidthCalc";
 import click from "./click--helper";
 
-const NavIcon = ({ icon, text}) => {
+const NavIcon = ({ icon, text,content }) => {
   const toggle = useContext(Toggle);
-  const minWidth = useContext(Width).minWidth; //minWidth is used to set the 
+  const minWidth = useContext(Width).minWidth;
 
   return (
     <>
-      <Span className={"NavIcon"} onClick={(e)=>{click(e,document.getElementsByClassName("NavIcon"))}}>
+      <Span
+        data-tip={content}
+        className={"NavIcon"}
+        onClick={(e) => {
+          click(e, document.getElementsByClassName("NavIcon"));
+        }}
+      >
         <I>{React.createElement(icon, { width: "1.2rem", fill: "#8E8E8E" })}</I>
-        <CSSTransition in={toggle} timeout={300} unmountOnExit classNames="toggle">
+        <CSSTransition
+          in={toggle}
+          timeout={300}
+          unmountOnExit
+          classNames="toggle"
+        >
           <Div className="toggle-base" minWidth={minWidth}>
             <P>{text}</P>
           </Div>

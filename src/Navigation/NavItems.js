@@ -4,16 +4,17 @@ import styled from "styled-components";
 import NavIcon from "./NavIcon";
 import CustomScrollDiv from "./Scroll";
 import WidthCalc from "./WidthCalc";
+import ToolTip from "./ToolTip";
 
 //Modal : Nav-Modal
 const items = [
-  { icon: Home, text: "Home" },
-  { icon: Home, text: "Control" },
-  { icon: Home, text: "Animal" },
-  { icon: Home, text: "Subject" },
-  { icon: Home, text: "Chat" },
-  { icon: Home, text: "About" },
-  { icon: Home, text: "Client" },
+  { icon: Home, text: "Home", content: "Home" },
+  { icon: Home, text: "Control", content: "Control" },
+  { icon: Home, text: "Animal", content: "Animal" },
+  { icon: Home, text: "Subject", content: "Subject" },
+  { icon: Home, text: "Chat", content: "Chat" },
+  { icon: Home, text: "About", content: "About" },
+  { icon: Home, text: "Client", content: "Client" },
 ];
 //Modal end
 
@@ -23,9 +24,16 @@ const NavItem = () => {
     <WidthCalc>
       <CustomScrollDiv>
         <Ul className="scroll-host">
-          {items.map(({ icon, text }) => (
-            <NavIcon key={text} icon={icon} text={text}></NavIcon>
-          ))}
+          <ToolTip name={"NavIcon"}>
+            {items.map(({ icon, text, content }) => (
+              <NavIcon
+                key={text}
+                icon={icon}
+                text={text}
+                content={content}
+              ></NavIcon>
+            ))}
+          </ToolTip>
         </Ul>
       </CustomScrollDiv>
     </WidthCalc>
