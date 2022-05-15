@@ -45,7 +45,7 @@ flex-direction:column;
 // background-color:aqua;
 transition: width 0.5s;
 overflow-x:hidden;
-box-shadow: 2px 0.1px 5px #c9c9c9;
+// box-shadow: 2px 0.1px 5px #c9c9c9;
 border-radius:13px;
 height:95vh;
 `
